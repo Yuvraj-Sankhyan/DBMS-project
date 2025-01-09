@@ -1,0 +1,26 @@
+Run these commands in command prompt , by logging in mysql -u root
+
+create database dbms_nifty;
+use dbms_nifty;
+
+CREATE TABLE ibm_data (
+    timestamp DATETIME DEFAULT NULL,
+    open_price DECIMAL(10,4) DEFAULT NULL,
+    high_price DECIMAL(10,4) DEFAULT NULL,
+    low_price DECIMAL(10,4) DEFAULT NULL,
+    close_price DECIMAL(10,4) DEFAULT NULL,
+    volume INT DEFAULT NULL
+);
+
+CREATE TABLE login (
+    login_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email_id VARCHAR(255) DEFAULT NULL,
+    login_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE registration (
+    email_id VARCHAR(255) NOT NULL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    surname VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
