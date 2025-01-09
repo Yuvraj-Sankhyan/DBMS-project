@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBM Stock Prices Graph</title>
+    <!-- Link to the existing CSS -->
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <!-- Add Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">IBM Stock Prices (Real-Time)</h1>
+        <canvas id="ibmGraph"></canvas>
+    </div>
+
+    <script>
+        // Fetch data from the Flask backend (replace with correct URL if needed)
+        fetch('/get_ibm_data')  // Assuming '/get_ibm_data' returns JSON data
+            .then(response => response.json())
+            .then(data => {
+                const timestamps = data.map(entry => entry.timestamp);  // Assuming 'timestamp' is a field in your data
+                const closePrices = data.map(entry => entry.close_price);  // Assuming 'close_price' is the field for IBM stock close price
+
+                const graphData = {
+                    labels: timestamps,
+                    datasets: [{
+                        label: 'IBM Stock Close Price',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        data: closePrices,
+                        tension: 0.1
+                    }]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: graphData,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        }
+                    }
+                };
+
+                new Chart(document.getElementById('ibmGraph'), config);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
